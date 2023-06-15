@@ -19,7 +19,7 @@ export async function run(suites, { bail = false }) {
   // @ts-expect-error
   globalThis.UVU_DEFER = 1
   const { exec } = await import('uvu')
-  const { default: test } = await import('subtest')
+  const { default: test } = await import('./lib.js')
 
   let suite,
     idx = 0
