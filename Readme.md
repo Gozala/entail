@@ -62,4 +62,3 @@ test({ testMath, testString })
 ```sh
 node ./mytest.js
 ```
-
