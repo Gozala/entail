@@ -25,8 +25,8 @@
     "build": "tsc --build",
     "prepublishOnly": "tsc --build",
     "test:web": "playwright-test test --runner subtest",
-    "test:node": "subtest test",
-    "test": "subtest test",
+    "test:node": "node ./src/bin.js test",
+    "test": "node ./src/bin.js test",
     "coverage": "c8 --reporter=html mocha test/**/*.spec.js && npm_config_yes=true npx st -d coverage -p 8080",
     "check": "tsc --build"
   },
