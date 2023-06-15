@@ -1,7 +1,7 @@
 {
   "name": "@gozala/subtest",
   "description": "Not opinionated test runner",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "keywords": [
     "uvu",
     "test"
@@ -49,7 +49,8 @@
   "exports": {
     ".": {
       "types": "./dist/src/lib.d.ts",
-      "import": "./src/lib.js"
+      "import": "./src/lib.js",
+      "default": "./src/lib.js"
     },
     "./assert": {
       "types": "./dist/src/assert.d.ts",
