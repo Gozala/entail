@@ -1,4 +1,4 @@
-import * as assert from 'subtest/assert'
+import * as assert from '../src/assert.js'
 
 /**
  * @type {import('subtest').Suite}
