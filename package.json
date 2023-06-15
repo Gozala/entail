@@ -1,7 +1,7 @@
 {
   "name": "@gozala/subtest",
   "description": "Not opinionated test runner",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "keywords": [
     "uvu",
     "test"
@@ -24,9 +24,9 @@
   "scripts": {
     "build": "tsc --build",
     "prepublishOnly": "tsc --build",
-    "test:web": "playwright-test test --runner @gozala/subtest test",
-    "test:node": "node ./src/bin.js test",
-    "test": "node ./src/bin.js test",
+    "test:web": "playwright-test test --runner @gozala/subtest test/*.js",
+    "test:node": "node ./src/bin.js test/*.js",
+    "test": "node ./src/bin.js test/*.js",
     "coverage": "c8 --reporter=html mocha test/**/*.spec.js && npm_config_yes=true npx st -d coverage -p 8080",
     "check": "tsc --build"
   },

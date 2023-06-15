@@ -3,6 +3,7 @@
 import sade from 'sade'
 import * as Parser from 'uvu/parse'
 import * as process from 'node:process'
+import glob from './glob.js'
 
 /**
  * This is the fork of the uvu/run module, which unlike original does not
@@ -35,16 +36,17 @@ export async function run(suites, { bail = false }) {
   await exec(bail)
 }
 
-sade('uvu [dir] [pattern]')
+sade('subtest [pattern]')
   .option('-b, --bail', 'Exit on first failure')
   .option('-i, --ignore', 'Any file patterns to ignore')
   .option('-r, --require', 'Additional module(s) to preload')
   .option('-C, --cwd', 'The current directory to resolve from', '.')
   .option('-c, --color', 'Print colorized output', true)
-  .action(async (dir, pattern, opts) => {
+  .action(async (source = '*.js', opts) => {
     try {
       if (opts.color) process.env.FORCE_COLOR = '1'
-      const context = await Parser.parse(dir, pattern, opts)
+      const pattern = source.includes('.') ? source : `${source}*.js`
+      const context = await Parser.parse(undefined, glob(pattern).source, opts)
       await run(context.suites, opts)
     } catch (cause) {
       const error = /** @type {Error} */ (cause)
