@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/Gozala/subtest/compare/v1.0.0...v1.0.1) (2023-06-15)
+
+
+### Bug Fixes
+
+* release script ([#4](https://github.com/Gozala/subtest/issues/4)) ([f1979ab](https://github.com/Gozala/subtest/commit/f1979abb38137a193086a112e3be8d66663fd7fe))
+
 ## 1.0.0 (2023-06-15)
 
 
