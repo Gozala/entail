@@ -8,19 +8,19 @@ subtest will run functions exported by a name starting with `test`
 
 ```js
 // You can use camel case naming
-/** @type {import('subtest').Test} */
+/** @type {import('entail').Test} */
 export const testSum = (assert) => {
   assert.equal(1 + 1, 2)
 }
 
 // You can also use snake case naming
-/** @type {import('subtest').Test} */
+/** @type {import('entail').Test} */
 export const test_multiply = (assert) => {
   assert.equal(2 * 2, 4)
 }
 
 // Or just use name `test`
-/** @type {import('subtest').Test} */
+/** @type {import('entail').Test} */
 export const test = (assert) => {
   assert.throws(() => new Error('boom'))
 }
@@ -52,7 +52,7 @@ subtest test
 Alternatively you can create node script e.g. `mytest.js` that runs tests
 
 ```js
-import test from 'subtest'
+import test from 'entail'
 import * testMath from './test/math.js'
 import * testString from './test/string.js'
 

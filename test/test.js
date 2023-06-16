@@ -1,7 +1,7 @@
 import * as assert from '../src/assert.js'
 
 /**
- * @type {import('subtest').Suite}
+ * @type {import('entail').Suite}
  */
 export const test = {
   'skip should not run': (assert) => {

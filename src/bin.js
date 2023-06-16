@@ -6,7 +6,7 @@ import { pathToFileURL } from 'node:url'
 import { findTests, relative } from './fs.js'
 import { testURLs } from './lib.js'
 
-sade('subtest [pattern]')
+sade('entail [pattern]')
   .option('-b, --bail', 'Exit on first failure')
   .option('-C, --cwd', 'The current directory to resolve from')
   .option('-c, --color', 'Print colorized output', true)

@@ -1,7 +1,7 @@
 {
   "name": "entail",
   "description": "Not opinionated test runner",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "keywords": [
     "uvu",
     "test"
@@ -47,7 +47,7 @@
   "module": "src/lib.js",
   "types": "./dist/src/lib.d.ts",
   "bin": {
-    "subtest": "./src/bin.js"
+    "entail": "./src/bin.js"
   },
   "exports": {
     ".": {

@@ -218,7 +218,7 @@ const tests = Object.fromEntries([
     )
     .join(',\n    ')}
 ])
-const { test } = await import('@gozala/subtest')
+const { test } = await import('entail')
 
 const result = await test(tests)
 self.PW_TEST.end(result.failed.length > 0)
