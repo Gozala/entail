@@ -1,66 +1,178 @@
 import * as assert from './assert.js'
 import * as API from './api.js'
-import { test } from 'uvu'
 export * from './api.js'
-
+import { report } from './reporter.js'
 export { assert }
 
 /**
- * @param {string} title
+ * @param {Record<string, object>} tests
+ * @param {{bail: boolean}} options
+ * @returns {AsyncIterable<API.Output>}
  */
-const match = (title) => {
-  switch (title.slice(0, 5)) {
-    case 'only!':
-    case 'only_':
-    case 'only ':
-      return test.only
-    case 'skip!':
-    case 'skip_':
-    case 'skip ':
-      return test.skip
-    default:
-      return undefined
-  }
-}
-
-/**
- * @param {Iterable<[string, API.Suite|API.Test]>} entries
- * @param {(typeof test.only)} [override]
- */
-
-const build = (entries, override) => {
-  for (const [name, member] of entries) {
-    if (typeof member === 'function') {
-      const mode = override || match(name) || test
-      mode(name, () => /** @type {void} */ (member(assert)))
+export async function* run(tests, { bail }) {
+  for (const unit of iterate(tests)) {
+    if (unit.mode === SKIP) {
+      yield { skip: unit }
     } else {
-      build(Object.entries(member), override || match(name))
-    }
-  }
+      yield { test: unit }
+      let start = performance.now()
+      try {
+        await unit.test(assert)
+        yield { pass: { ...unit, duration: performance.now() - start } }
+      } catch (cause) {
+        const error = /** @type {API.Assertion} */ (cause)
+        yield { fail: { ...unit, duration: performance.now() - start, error } }
 
-  return test
-}
-
-const TEST_PATTERN = /^(skipTest|onlyTest|test)([_$ A-Z].*)*$/
-
-/**
- * @param {API.Suite} source
- * @returns {Iterable<[string, API.Suite|API.Test]>}
- */
-function* iterateTests(source) {
-  for (const [name, member] of Object.entries(source)) {
-    if (TEST_PATTERN.test(name)) {
-      yield [name, member]
+        if (bail) {
+          return
+        }
+      }
     }
   }
 }
 
 /**
- * @param {API.Suite} tests
+ * @param {Record<string, object>} modules
+ * @param {{bail?: boolean}} [options]
  */
-export default (tests) => {
-  build(iterateTests(tests))
-  test.run()
+export const test = async (modules, { bail = false } = {}) =>
+  report(run(modules, { bail }))
+
+/**
+ *
+ * @param {string[]} urls
+ * @param {{bail?:boolean}} [options]
+ */
+export const testURLs = async (urls, { bail = false } = {}) => {
+  const base = new URL(`file://${process.cwd()}/`).href
+
+  const modules = Object.fromEntries(
+    await Promise.all(
+      urls.map(async (url) => [
+        url.startsWith(base) ? url.slice(base.length) : url,
+        await import(url),
+      ])
+    )
+  )
+
+  await test(modules, { bail })
+}
+
+export default test
+
+const SKIP_EXPORT = /^skipTest|skip_test|skip test|skip! test/
+const ONLY_EXPORT = /^onlyTest|only_test|only test|only! test/
+const TEST_EXPORT = /^test([_$ A-Z].*)*/
+
+/**
+ * @param {Record<string, object>} modules
+ * @returns {Iterable<API.Unit>}
+ */
+export const iterate = function* (modules) {
+  let mode = TEST
+  const units = []
+
+  for (const [name, exports] of Object.entries(modules)) {
+    for (const unit of iterateModule(exports, [name])) {
+      if (mode === ONLY) {
+        yield unit.mode === ONLY ? unit : { ...unit, mode: SKIP }
+      } else {
+        if (unit.mode === ONLY) {
+          mode = ONLY
+          yield* skip(units.splice(0))
+          yield unit
+        } else {
+          units.push(unit)
+        }
+      }
+    }
+  }
+
+  yield* units
+}
+
+/**
+ * @param {API.Unit[]} units
+ * @returns {Iterable<API.Unit>}
+ */
+function* skip(units) {
+  for (const unit of units) {
+    yield { ...unit, mode: SKIP }
+  }
+}
+
+/**
+ * @param {{test?:{skip?:unknown, only?: unknown}}} exports
+ * @param {[string]} at
+ * @returns {Iterable<API.Unit>}
+ */
+function* iterateModule(exports, at) {
+  const moduleMode =
+    exports?.test?.skip === true
+      ? SKIP
+      : exports?.test?.only === true
+      ? ONLY
+      : null
+
+  for (const [name, unit] of Object.entries(exports)) {
+    const mode = SKIP_EXPORT.test(name)
+      ? SKIP
+      : ONLY_EXPORT.test(name)
+      ? moduleMode ?? ONLY
+      : TEST_EXPORT.test(name)
+      ? moduleMode ?? TEST
+      : null
+
+    if (mode) {
+      if (typeof unit === 'function') {
+        yield { test: unit, mode, at, name }
+      } else if (unit && typeof unit === 'object') {
+        yield* iterateTestSuite(unit, mode, [...at, name])
+      }
+    }
+  }
+}
+
+const SKIP_MEMBER = /^skip[!_ ]/
+const ONLY_MEMBER = /^only[!_ ]/
+
+const SKIP = 'skip'
+const ONLY = 'only'
+const TEST = 'test'
+
+/**
+ * @param {any} group
+ * @param {API.Mode} mode
+ * @param {string[]} at
+ * @returns {Iterable<API.Unit>}
+ */
+function* iterateTestSuite(group, mode, at) {
+  const groupMode =
+    mode === SKIP
+      ? SKIP
+      : group?.skip === true
+      ? SKIP
+      : group?.only === true
+      ? ONLY
+      : mode === ONLY
+      ? ONLY
+      : undefined
+
+  for (const [name, unit] of Object.entries(group)) {
+    const mode = SKIP_MEMBER.test(name)
+      ? SKIP
+      : ONLY_MEMBER.test(name)
+      ? groupMode === SKIP
+        ? SKIP
+        : ONLY
+      : groupMode ?? TEST
+
+    if (typeof unit === 'function') {
+      yield { mode, test: unit, at, name }
+    } else if (unit && typeof unit === 'object') {
+      yield* iterateTestSuite(unit, mode, [...at, name])
+    }
+  }
 }
 
 /**
@@ -74,34 +186,13 @@ export default (tests) => {
  * @typedef {{
  * runTests(page:Page): void
  * build(options:{}, template: string, mode:Mode): void
- * }} Test
+ * options: { cwd: string }
+ * }} TestRunner
  *
- * @param {{new():Test}} Runner
+ * @param {{new():TestRunner}} Runner
  */
 export const createPlaywrightRunner = (Runner) =>
   class SubtestRunner extends Runner {
-    /**
-     * @param {Page} page
-     */
-    async runTests(page) {
-      let total = 0
-      let passed = 0
-
-      page.on('console', async (msg) => {
-        const txt = msg.text()
-
-        if (txt.includes('  Total: ')) {
-          total = Number(txt.replace('Total:', '').trim())
-        }
-        if (txt.includes('  Passed: ')) {
-          passed = Number(txt.replace('Passed:', '').trim())
-          await page.evaluate(`self.PW_TEST.end(${total !== passed})`)
-        }
-      })
-
-      return await super.runTests(page)
-    }
-
     /**
      * Compile tests
      *
@@ -115,13 +206,22 @@ export const createPlaywrightRunner = (Runner) =>
      * @param {string[]} urls
      */
     compileTestImports(urls) {
+      const base = this.options.cwd + '/'
       return `
-const Subtest = await import('@gozala/subtest')
-Subtest.default({
-  test: [
-    ${urls.map((url) => `await import('${url}')`).join(',\n    ')}
-  ]
-})
+const tests = Object.fromEntries([
+  ${urls
+    .map(
+      (url) =>
+        `['${
+          url.startsWith(base) ? url.slice(base.length) : url
+        }', await import('${url}')]`
+    )
+    .join(',\n    ')}
+])
+const { test } = await import('@gozala/subtest')
+
+const result = await test(tests)
+self.PW_TEST.end(result.failed.length > 0)
 `
     }
   }

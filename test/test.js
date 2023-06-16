@@ -15,6 +15,7 @@ export const test = {
   },
 
   'should run': (assert) => {
+    console.log('\b\b', 'hello', 'world', '\b')
     assert.equal(1, 1)
   },
 
