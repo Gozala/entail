@@ -1,5 +1,27 @@
 # Changelog
 
+## [2.0.0](https://github.com/Gozala/subtest/compare/v1.0.1...v2.0.0) (2023-06-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* rebrand ([#7](https://github.com/Gozala/subtest/issues/7))
+* rebrand & rewrite
+* expose playwright runner
+
+### Features
+
+* enable web tests ([44ea4d0](https://github.com/Gozala/subtest/commit/44ea4d03b0fe935bce9bebe8a1d0923635d180de))
+* expose playwright runner ([f2c7f10](https://github.com/Gozala/subtest/commit/f2c7f1088bec075a11328db0100ad9664ad20185))
+* rebrand ([#7](https://github.com/Gozala/subtest/issues/7)) ([44338ce](https://github.com/Gozala/subtest/commit/44338ce5afa049dc982002a0ec729df39a4ef361))
+* rebrand & rewrite ([5d74294](https://github.com/Gozala/subtest/commit/5d742940b42c9826bb5e15e141b836dc36cd88dc))
+* remove dir option ([57f5fee](https://github.com/Gozala/subtest/commit/57f5feeae7f47d49884b14dccc6d374ce94c6f45))
+
+
+### Bug Fixes
+
+* web tests ([885a4dc](https://github.com/Gozala/subtest/commit/885a4dcdebc0a2ed241a30c84697d346b96e314d))
+
 ## [1.0.1](https://github.com/Gozala/subtest/compare/v1.0.0...v1.0.1) (2023-06-15)
 
 
