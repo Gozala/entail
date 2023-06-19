@@ -121,9 +121,9 @@ node ./mytest.js
 
 ## Credits
 
-Initially this started as wrapper around superb [uvu] library. While it mostly had been replaced by own runner and other components would not have existed without [uvu] been around.
+Initially this started as wrapper around superb [uvu] library. While uvu has mostly been replaced by entail's own components it would not have existed if [uvu] was not around.
 
-I think of `entail` as successor of [estest], which inspired idea of tests without frameworks.
+Entail is envisioned as a successor of [estest], from which idea of tests without frameworks came to be.
 
 [uvu]:https://github.com/lukeed/uvu
 [estest]:https://www.npmjs.com/package/estest

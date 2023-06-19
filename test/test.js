@@ -17,10 +17,10 @@ export const test = {
     try {
       assert.ok('')
       assert.fail('should have failed throw')
-    } catch (error) {
-      const message = String(error)
-      assert.match(message, /AssertionError/)
-      assert.match(message, /"" == true/)
+    } catch (cause) {
+      const error = /** @type {Error} */ (cause)
+      assert.equal(error.name, 'AssertionError')
+      assert.match(error, /"" == true/)
     }
   },
 
@@ -28,22 +28,22 @@ export const test = {
     let threw = 0
     try {
       assert.fail('should have failed throw')
-    } catch (error) {
+    } catch (cause) {
       threw++
-      const message = String(error)
-      assert.match(message, /AssertionError/)
-      assert.match(message, /should have failed throw/)
+      const error = /** @type {Error} */ (cause)
+      assert.equal(error.name, 'AssertionError')
+      assert.match(error, /should have failed throw/)
     }
 
     assert.equal(threw, 1)
 
     try {
       assert.fail()
-    } catch (error) {
+    } catch (cause) {
       threw++
-      const message = String(error)
-      assert.match(message, /AssertionError/)
-      assert.match(message, /Failed/)
+      const error = /** @type {Error} */ (cause)
+      assert.equal(error.name, 'AssertionError')
+      assert.match(error, /Failed/)
     }
     assert.equal(threw, 2)
   },
@@ -53,9 +53,10 @@ export const test = {
       // @ts-expect-error - types do not overlap
       assert.strictEqual(1, '1')
       assert.fail('should have failed throw')
-    } catch (error) {
-      const message = String(error)
-      assert.match(message, /Expected values to be strictly equal/)
+    } catch (cause) {
+      const error = /** @type {Error} */ (cause)
+      assert.equal(error.name, 'AssertionError')
+      assert.match(error, /Expected values to be strictly equal/)
     }
 
     assert.strictEqual(NaN, NaN)
@@ -66,9 +67,10 @@ export const test = {
     try {
       assert.notStrictEqual(1, 1)
       assert.fail('should have failed throw')
-    } catch (error) {
-      const message = String(error)
-      assert.match(message, /Expected values to be strictly unequal/)
+    } catch (cause) {
+      const error = /** @type {Error} */ (cause)
+      assert.equal(error.name, 'AssertionError')
+      assert.match(error, /Expected values to be strictly unequal/)
     }
 
     assert.notStrictEqual(-Infinity, Infinity)
@@ -82,9 +84,9 @@ export const test = {
     try {
       // @ts-expect-error - types do not overlap
       assert.equal(2, { x: 1 })
-    } catch (error) {
-      const message = String(error)
-      assert.match(message, /AssertionError/)
+    } catch (cause) {
+      const error = /** @type {Error} */ (cause)
+      assert.equal(error.name, 'AssertionError')
     }
   },
 

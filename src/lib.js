@@ -199,9 +199,9 @@ const tests = Object.fromEntries([
     )
     .join(',\n    ')}
 ])
-const { test } = await import('entail')
+const entail = await import('entail')
 
-const result = await test(tests)
+const result = await entail.default(tests)
 self.PW_TEST.end(result.failed.length > 0)
 `
     }
