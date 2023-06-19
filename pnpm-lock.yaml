@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  dequal:
+    specifier: ^2.0.3
+    version: 2.0.3
   globby:
     specifier: 13.1.4
     version: 13.1.4

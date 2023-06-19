@@ -20,7 +20,8 @@ export async function* run(tests, { bail }) {
         await unit.test(assert)
         yield { pass: { ...unit, duration: performance.now() - start } }
       } catch (cause) {
-        const error = /** @type {API.Assertion} */ (cause)
+        const error = /** @type {API.AssertionError} */ (cause)
+        error.origin = unit
         yield { fail: { ...unit, duration: performance.now() - start, error } }
 
         if (bail) {
@@ -35,28 +36,8 @@ export async function* run(tests, { bail }) {
  * @param {Record<string, object>} modules
  * @param {{bail?: boolean}} [options]
  */
-export const test = async (modules, { bail = false } = {}) =>
+const test = async (modules, { bail = false } = {}) =>
   report(run(modules, { bail }))
-
-/**
- *
- * @param {string[]} urls
- * @param {{bail?:boolean}} [options]
- */
-export const testURLs = async (urls, { bail = false } = {}) => {
-  const base = new URL(`file://${process.cwd()}/`).href
-
-  const modules = Object.fromEntries(
-    await Promise.all(
-      urls.map(async (url) => [
-        url.startsWith(base) ? url.slice(base.length) : url,
-        await import(url),
-      ])
-    )
-  )
-
-  await test(modules, { bail })
-}
 
 export default test
 
@@ -192,7 +173,7 @@ function* iterateTestSuite(group, mode, at) {
  * @param {{new():TestRunner}} Runner
  */
 export const createPlaywrightRunner = (Runner) =>
-  class SubtestRunner extends Runner {
+  class PlaywrightRunner extends Runner {
     /**
      * Compile tests
      *

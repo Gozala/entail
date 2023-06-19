@@ -4,7 +4,7 @@ import sade from 'sade'
 import * as process from 'node:process'
 import { pathToFileURL } from 'node:url'
 import { findTests, relative } from './fs.js'
-import { testURLs } from './lib.js'
+import test from './lib.js'
 
 sade('entail [pattern]')
   .option('-b, --bail', 'Exit on first failure')
@@ -27,24 +27,22 @@ sade('entail [pattern]')
       try {
         if (color) process.env.FORCE_COLOR = '1'
 
-        const urls = findTests({
+        const paths = findTests({
           cwd,
           extensions: extensions.split(','),
           filePatterns: [pattern],
-        }).map((path) => pathToFileURL(path).href)
+        })
 
-        testURLs(urls, { bail })
+        const modules = Object.fromEntries(
+          await Promise.all(
+            paths.map(async (path) => [
+              relative(cwd, path),
+              await import(pathToFileURL(path).href),
+            ])
+          )
+        )
 
-        // const modules = Object.fromEntries(
-        //   await Promise.all(
-        //     paths.map(async (path) => [
-        //       relative(cwd, path),
-        //       await import(pathToFileURL(path).href),
-        //     ])
-        //   )
-        // )
-
-        // await test(modules, { bail })
+        await test(modules, { bail })
       } catch (cause) {
         const error = /** @type {Error} */ (cause)
         console.error(error.stack || error.message)
