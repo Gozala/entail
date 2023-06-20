@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.1](https://github.com/Gozala/subtest/compare/v2.0.0...v2.0.1) (2023-06-20)
+
+
+### Bug Fixes
+
+* trim entail runner from the stack trace ([e9df5c6](https://github.com/Gozala/subtest/commit/e9df5c6111fcb11bea80a3ad008b359de10d07a3))
+* trim entail runner from the stack trace ([#10](https://github.com/Gozala/subtest/issues/10)) ([c2cb5db](https://github.com/Gozala/subtest/commit/c2cb5db36a3781c36cd3cc5fa3c6e191b057af98))
+
 ## [2.0.0](https://github.com/Gozala/subtest/compare/v1.0.1...v2.0.0) (2023-06-19)
 
 
