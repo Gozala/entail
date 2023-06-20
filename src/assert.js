@@ -116,9 +116,9 @@ export class AssertionError extends Error {
 
     const body = [
       indent(`${indent(message)}${method}`),
+      ...(details.length ? ['', details] : []),
       '',
-      indent(indent(details)),
-      stack,
+      indent(indent(stack)),
     ]
 
     return `  ${FAILURE}${site}\n${body.join('\n')}`
@@ -134,17 +134,21 @@ export class AssertionError extends Error {
     if (offset < 0) {
       return ''
     } else {
-      let output = ['']
+      let output = []
 
       const lines = stack.substring(offset).replace(/\\/g, '/').split('\n')
       for (const line of lines) {
         const text = line.trim()
+        if (ENTAIL_RUN.test(text)) {
+          break
+        }
+
         if (text.length && !IGNORE.test(text)) {
           output.push(text)
         }
       }
 
-      return kleur.grey(output.join('\n    '))
+      return kleur.grey(output.join('\n'))
     }
   }
 }
@@ -156,6 +160,7 @@ const indent = (message, indent = '  ') =>
   `${indent}${message.split('\n').join(`\n${indent}`)}`
 
 const IGNORE = /^\s*at.*(?:\(|\s)(?:node|(internal\/[\w/]*))/
+const ENTAIL_RUN = /^\s*at run \(.*entail\/src\/lib.js/
 const PASS = undefined
 
 /**
