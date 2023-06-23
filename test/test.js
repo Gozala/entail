@@ -97,7 +97,6 @@ export const test = {
     assert.deepEqual({ x: 1 }, { x: 1 })
   },
   'assert notDeepEqual': (assert) => {
-    // @ts-expect-error - types do not overlap
     assert.notDeepEqual({ x: 1 }, { x: 1, y: 1 })
   },
   'assert throws pattern': (assert) => {
