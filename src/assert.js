@@ -237,8 +237,8 @@ export const fail = (message) =>
  *
  * @template T
  * @template {T} U
- * @param {U} actual
- * @param {T} expected
+ * @param {T} actual
+ * @param {U} expected
  * @param {string|Error} [message]
  * @returns {asserts actual is T}
  */
@@ -300,8 +300,8 @@ export const notStrictEqual = (actual, expected, message) =>
  *
  * @template T
  * @template {T} U
- * @param {U} actual
- * @param {T} expected
+ * @param {T} actual
+ * @param {U} expected
  * @param {string|Error} [message]
  * @returns {asserts actual is T}
  */
@@ -350,8 +350,8 @@ export const notEqual = (actual, expected, message) =>
  *
  * @template T
  * @template {T} U
- * @param {U} actual
- * @param {T} expected
+ * @param {T} actual
+ * @param {U} expected
  * @param {string|Error} [message]
  * @returns {asserts actual is T}
  */

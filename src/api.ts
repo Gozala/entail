@@ -44,8 +44,8 @@ export interface Assert {
    * determined by Object.is().
    */
   strictEqual<T, U extends T>(
-    actual: U,
-    expected: T,
+    actual: T,
+    expected: U,
     message?: string | Error
   ): void
 
@@ -53,8 +53,8 @@ export interface Assert {
    * The strict non-equivalence assertion tests for any strict inequality.
    */
   notStrictEqual<T, U extends T>(
-    actual: U,
-    expected: T,
+    actual: T,
+    expected: U,
     message?: string | Error
   ): void
 
@@ -63,7 +63,7 @@ export interface Assert {
    * using the `==` operator. `NaN` is specially handled and treated as being
    * identical if both sides are `NaN`.
    */
-  equal<T, U extends T>(actual: U, expected: T, message?: string | Error): void
+  equal<T, U extends T>(actual: T, expected: U, message?: string | Error): void
 
   /**
    * Tests shallow, coercive inequality with the `!=` operator. `NaN` is specially
@@ -77,8 +77,8 @@ export interface Assert {
    * ```
    */
   notEqual<T, U extends T>(
-    actual: U,
-    expected: T,
+    actual: T,
+    expected: U,
     message?: string | Error
   ): void
 
@@ -86,8 +86,8 @@ export interface Assert {
    *
    */
   deepEqual<T, U extends T>(
-    actual: U,
-    expected: T,
+    actual: T,
+    expected: U,
     message?: string | Error
   ): void
 
@@ -95,8 +95,8 @@ export interface Assert {
    *
    */
   notDeepEqual<T, U extends T>(
-    actual: U,
-    expected: T,
+    actual: T,
+    expected: U,
     message?: string | Error
   ): void
   /**
