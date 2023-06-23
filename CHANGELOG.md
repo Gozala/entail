@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.2](https://github.com/Gozala/subtest/compare/v2.0.1...v2.0.2) (2023-06-23)
+
+
+### Bug Fixes
+
+* subtyping in asserts ([4466430](https://github.com/Gozala/subtest/commit/4466430eec3a02ebe1d029ac5414c4663abfdd79))
+* subtyping in asserts ([#14](https://github.com/Gozala/subtest/issues/14)) ([af2dd3c](https://github.com/Gozala/subtest/commit/af2dd3c38fd84ca2c6b7a0e5350d15b7f727758f))
+
 ## [2.0.1](https://github.com/Gozala/subtest/compare/v2.0.0...v2.0.1) (2023-06-20)
 
 
