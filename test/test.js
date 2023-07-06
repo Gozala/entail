@@ -93,6 +93,11 @@ export const test = {
   'assert notEqual': (assert) => {
     assert.notEqual({ x: 1 }, { x: 1 })
   },
+
+  'assert async': async (assert) => {
+    await new Promise((resolve) => setTimeout(resolve, 200))
+    assert.ok(true)
+  },
   'assert deepEqual': (assert) => {
     assert.deepEqual({ x: 1 }, { x: 1 })
   },

@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@types/node": "20.3.1",
-    "playwright-test": "git+https://github.com/Gozala/playwright-test.git#patch-2",
+    "playwright-test": "git+https://github.com/Gozala/playwright-test.git#feat/process.stdout",
     "prettier": "2.8.8",
     "typescript": "^5.1.3"
   },
