@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.1.0](https://github.com/Gozala/subtest/compare/v2.0.2...v2.1.0) (2023-07-06)
+
+
+### Features
+
+* upgrade to playwright-test ([ce0395d](https://github.com/Gozala/subtest/commit/ce0395d513bc96213c630ea47932bf96d4f81bed))
+
+
+### Bug Fixes
+
+* assert stack trace ([aa519ee](https://github.com/Gozala/subtest/commit/aa519eeffa096d4ada971f270ce3638c0b7fec9d))
+* web tests ([4630520](https://github.com/Gozala/subtest/commit/46305204c0716a9ff546705a4e8e61c60d9f0819))
+
 ## [2.0.2](https://github.com/Gozala/subtest/compare/v2.0.1...v2.0.2) (2023-06-23)
 
 
