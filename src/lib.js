@@ -157,52 +157,36 @@ function* iterateTestSuite(group, mode, at) {
 }
 
 /**
- * @typedef {{
- * on(event:'console', handler:(msg:{text():string}) => void): void
- * evaluate(code:string): void}
- * } Page
  *
- * @typedef {"before" | "bundle" | "watch"} Mode
- *
- * @typedef {{
- * runTests(page:Page): void
- * build(options:{}, template: string, mode:Mode): void
- * options: { cwd: string }
- * }} TestRunner
- *
- * @param {{new():TestRunner}} Runner
+ * @param {string} url
+ * @param {string} base
  */
-export const createPlaywrightRunner = (Runner) =>
-  class PlaywrightRunner extends Runner {
-    /**
-     * Compile tests
-     *
-     * @param {Mode} mode
-     */
-    compiler(mode = 'bundle') {
-      return this.build({}, '', mode)
-    }
+const formatPath = (url, base) => {
+  const relative = url.startsWith(base) ? url.slice(base.length) : url
+  return relative.startsWith('/')
+    ? relative.slice(1)
+    : relative.startsWith('\\')
+    ? relative.slice(1)
+    : relative
+}
 
-    /**
-     * @param {string[]} urls
-     */
-    compileTestImports(urls) {
-      const base = this.options.cwd + '/'
-      return `
+export const playwrightTestRunner = {
+  options: {},
+  /**
+   *
+   * @param {{cwd: string}} options
+   * @param {string[]} urls
+   * @returns
+   */
+  compileRuntime: ({ cwd }, urls) => `
 const tests = Object.fromEntries([
   ${urls
-    .map(
-      (url) =>
-        `['${
-          url.startsWith(base) ? url.slice(base.length) : url
-        }', await import('${url}')]`
-    )
+    .map((url) => `['${formatPath(url, cwd)}', await import('${url}')]`)
     .join(',\n    ')}
 ])
 const entail = await import('entail')
 
 const result = await entail.default(tests)
-self.PW_TEST.end(result.failed.length > 0)
-`
-    }
-  }
+process.exit(result.failed.length > 0 ? 1 : 0)
+`,
+}
