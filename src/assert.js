@@ -160,7 +160,7 @@ const indent = (message, indent = '  ') =>
   `${indent}${message.split('\n').join(`\n${indent}`)}`
 
 const IGNORE = /^\s*at.*(?:\(|\s)(?:node|(internal\/[\w/]*))/
-const ENTAIL_RUN = /^\s*at run \(.*entail\/src\/lib.js/
+const ENTAIL_RUN = /^\s*at run.* \(.*entail\/src\/lib.js/
 const PASS = undefined
 
 /**
