@@ -1,4 +1,5 @@
 import * as assert from '../src/assert.js'
+import entail from '../src/lib.js'
 
 /**
  * @type {import('entail').Suite}
@@ -113,5 +114,32 @@ export const test = {
     assert.throws(() => {
       throw new Error('Boom')
     })
+  },
+
+  'assert error stack trace': async (assert) => {
+    const boom = () => {
+      throw new Error('Boom')
+    }
+
+    let output = ``
+    const result = await entail(
+      {
+        module: {
+          testCase: function () {
+            boom()
+          },
+        },
+      },
+      {
+        writer: {
+          write: (chunk) => {
+            output += chunk
+          },
+        },
+      }
+    )
+
+    assert.equal(result.failed.length, 1)
+    assert.match(output, /at boom/g)
   },
 }

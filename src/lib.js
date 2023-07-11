@@ -4,6 +4,10 @@ export * from './api.js'
 import { report } from './reporter.js'
 export { assert }
 
+const write =
+  (typeof process < 'u' && process.stdout?.write?.bind(process.stdout)) ||
+  console.log
+
 /**
  * @param {Record<string, object>} tests
  * @param {{bail: boolean}} options
@@ -34,10 +38,19 @@ export async function* run(tests, { bail }) {
 
 /**
  * @param {Record<string, object>} modules
- * @param {{bail?: boolean}} [options]
+ * @param {{bail?: boolean, writer?: {write: (output:string|Uint8Array) => unknown}}} [options]
  */
-const test = async (modules, { bail = false } = {}) =>
-  report(run(modules, { bail }))
+const test = async (modules, { bail = false, writer = { write } } = {}) => {
+  const output = report(run(modules, { bail }))
+  while (true) {
+    const { done, value } = await output.next()
+    if (done) {
+      return value
+    } else {
+      writer.write(value)
+    }
+  }
+}
 
 export default test
 

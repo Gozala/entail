@@ -1,10 +1,6 @@
 import kleur from 'kleur'
-import { compare } from 'uvu/diff'
 import * as API from './api.js'
-
-const write =
-  (typeof process < 'u' && process.stdout?.write?.bind(process.stdout)) ||
-  console.log
+import { AssertionError } from './assert.js'
 
 const FILE = kleur.bold().underline().white
 const FAIL = kleur.red('✘ ')
@@ -14,9 +10,9 @@ const NORMAL = (text = '') => text
 
 /**
  * @param {AsyncIterable<API.Output>} output
- * @returns {Promise<API.Report>}
+ * @returns {AsyncGenerator<string, API.Report>}
  */
-export const report = async (output) => {
+export const report = async function* (output) {
   const passed = []
   const failed = []
   const skipped = []
@@ -35,15 +31,15 @@ export const report = async (output) => {
     if (cursor !== at) {
       const color = fail ? kleur.red : kleur.green
       if (total) {
-        write(color(`  (${pass} / ${total})\n`))
+        yield color(`  (${pass} / ${total})\n`)
       }
 
       if (fail > 0) {
         for (const unit of failed.slice(-fail)) {
-          write(`\n${unit.error}`)
+          yield `\n${AssertionError.format(unit.error)}`
         }
       }
-      cursor = updateCursor(cursor, at)
+      cursor = yield* updateCursor(cursor, at)
       fail = 0
       skip = 0
       pass = 0
@@ -51,14 +47,14 @@ export const report = async (output) => {
 
     if (message.skip) {
       skip++
-      write(SKIP)
+      yield SKIP
       skipped.push(message.skip)
     }
 
     if (message.pass) {
       pass++
       duration += message.pass.duration
-      write(PASS)
+      yield PASS
       passed.push(message.pass)
     }
 
@@ -66,29 +62,29 @@ export const report = async (output) => {
       fail++
       duration += message.fail.duration
       failed.push(message.fail)
-      write(FAIL)
+      yield FAIL
     }
   }
 
   const color = fail ? kleur.red : kleur.green
   if (total) {
-    write(color(`  (${pass} / ${pass + fail + skip})\n`))
+    yield color(`  (${pass} / ${pass + fail + skip})\n`)
   }
 
   if (fail) {
     for (const unit of failed.slice(-fail)) {
-      write(`\n${unit.error}\n`)
+      yield `\n${AssertionError.format(unit.error)}\n`
     }
-    write('\n')
+    yield '\n'
   }
 
   const formatPass = failed.length ? kleur.red : kleur.green
   const formatSkip = skipped.length ? kleur.yellow : NORMAL
   const ran = passed.length + skipped.length + failed.length
-  write(`\n\nTotal:     ${ran}`)
-  write(formatPass(`\nPassed:    ${passed.length}`))
-  write(formatSkip(`\nSkipped:   ${skipped.length}`))
-  write(`\nDuration:  ${duration.toFixed(2)}ms\n\n`)
+  yield `\n\nTotal:     ${ran}`
+  yield formatPass(`\nPassed:    ${passed.length}`)
+  yield String(formatSkip(`\nSkipped:   ${skipped.length}`))
+  yield `\nDuration:  ${duration.toFixed(2)}ms\n\n`
 
   return { passed, failed, skipped, duration }
 }
@@ -97,22 +93,20 @@ export const report = async (output) => {
  * @param {string[]} before
  * @param {string[]} after
  */
-const updateCursor = (before, after) => {
+const updateCursor = function* (before, after) {
   if (before !== after) {
     const [fileBefore, ...pathBefore] = before
     const [fileAfter, ...pathAfter] = after
     if (fileBefore !== fileAfter) {
-      write(`\n\n` + FILE(fileAfter))
+      yield `\n\n` + FILE(fileAfter)
     }
 
     for (let [level, name] of pathAfter.entries()) {
       if (pathBefore[level] !== name) {
-        write(`\n` + '  '.repeat(level) + name + ' ')
+        yield `\n${'  '.repeat(level)}${name} `
       }
     }
   }
 
   return after
 }
-
-const IGNORE = /^\s*at.*(?:\(|\s)(?:node|(internal\/[\w/]*))/
