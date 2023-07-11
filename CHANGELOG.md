@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.1](https://github.com/Gozala/subtest/compare/v2.1.0...v2.1.1) (2023-07-11)
+
+
+### Bug Fixes
+
+* surface thrown error stack traces ([68814f8](https://github.com/Gozala/subtest/commit/68814f8d18a1dc30cc6f592f660b98dd92405429))
+* surface thrown error stack traces ([#17](https://github.com/Gozala/subtest/issues/17)) ([95fa0ad](https://github.com/Gozala/subtest/commit/95fa0add17540841c67e70c93d54d465f1c39ad8)), closes [#13](https://github.com/Gozala/subtest/issues/13)
+
 ## [2.1.0](https://github.com/Gozala/subtest/compare/v2.0.2...v2.1.0) (2023-07-06)
 
 
