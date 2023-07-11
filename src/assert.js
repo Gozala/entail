@@ -101,11 +101,11 @@ export class AssertionError extends Error {
     return AssertionError.format(this)
   }
   /**
-   * @param {API.AssertionError} error
+   * @param {{details?:string, operator?:string, message:string, origin: Partial<API.Unit>, stack?: string}} error
    * @param {Partial<API.Unit>} [origin]
    */
   static format(error, origin = error.origin) {
-    const { details, operator, message } = error
+    const { details = '', operator = '', message } = error
     const { at = [], name = '' } = origin
     const title = name.length ? `"${kleur.red().bold(name)}"` : ``
     const place = title.length > 0 ? [...at, title] : at

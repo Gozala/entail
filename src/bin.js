@@ -42,7 +42,9 @@ sade('entail [pattern]')
           )
         )
 
-        await test(modules, { bail })
+        const result = await test(modules, { bail })
+
+        process.exit(result.failed.length > 0 ? 1 : undefined)
       } catch (cause) {
         const error = /** @type {Error} */ (cause)
         console.error(error.stack || error.message)
