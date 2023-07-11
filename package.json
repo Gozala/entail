@@ -1,7 +1,7 @@
 {
   "name": "entail",
   "description": "Tests your modules without any test library imports",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "keywords": [
     "test",
     "esm"
