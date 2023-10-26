@@ -33,7 +33,7 @@ export const test = (assert) => {
 Objects exported by a name that start with `test` are considered test suites. Properties of the suites are considered to be either a tests (function) or sub-suite.
 
 ```js
-export test = {
+export const test = {
   'multiply': (assert) => {
     assert.equal(2 * 2, 4)
   },
@@ -54,7 +54,7 @@ export const skipTestSum = (assert) => {
   assert.equal(1 + 1, 2)
 }
 
-export export test = {
+export const test = {
   'skip! multiply': (assert) => {
     assert.equal(2 * 2, 4)
   },
@@ -75,7 +75,7 @@ export const onlyTestSum = (assert) => {
   assert.equal(1 + 1, 2)
 }
 
-export export test = {
+export const test = {
   'only! multiply': (assert) => {
     assert.equal(2 * 2, 4)
   },
