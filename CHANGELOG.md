@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.2](https://github.com/Gozala/subtest/compare/v2.1.1...v2.1.2) (2023-10-26)
+
+
+### Bug Fixes
+
+* exports in examples ([329af7a](https://github.com/Gozala/subtest/commit/329af7a53a4595aa8b8fb5edb699b7a896b9f178))
+* exports in examples ([#20](https://github.com/Gozala/subtest/issues/20)) ([bc335e7](https://github.com/Gozala/subtest/commit/bc335e7bf0f3d1d75b1bedb0ec4b6e6d1c876e18))
+
 ## [2.1.1](https://github.com/Gozala/subtest/compare/v2.1.0...v2.1.1) (2023-07-11)
 
 
