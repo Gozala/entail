@@ -66,6 +66,19 @@ jobs:
       - run: pnpm install
       - name: Test
         run: pnpm run test:node
+  test-deno:
+    name: Test Deno
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x # Run with latest stable Deno.
+      - name: Test
+        run: deno task test:deno
   test-web:
     name: Test Web
     runs-on: ubuntu-latest
