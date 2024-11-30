@@ -77,6 +77,8 @@ jobs:
         uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x # Run with latest stable Deno.
+      - name: Install dependencies
+        run: deno install
       - name: Test
         run: deno task test:deno
   test-web:
