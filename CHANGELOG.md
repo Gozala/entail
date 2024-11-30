@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/Gozala/entail/compare/v2.2.0...v2.2.1) (2024-11-30)
+
+
+### Bug Fixes
+
+* deno config ([#25](https://github.com/Gozala/entail/issues/25)) ([0361c52](https://github.com/Gozala/entail/commit/0361c52c222a395c4e5a9b467b3124a52836a2d0))
+
 ## [2.2.0](https://github.com/Gozala/entail/compare/v2.1.2...v2.2.0) (2024-11-30)
 
 
