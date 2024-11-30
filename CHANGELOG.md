@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/Gozala/entail/compare/v2.1.2...v2.2.0) (2024-11-30)
+
+
+### Miscellaneous Chores
+
+* release 2.2.0 ([0c21c35](https://github.com/Gozala/entail/commit/0c21c356d197975c58a15af3ab147498b5c920ad))
+
 ## [2.1.2](https://github.com/Gozala/subtest/compare/v2.1.1...v2.1.2) (2023-10-26)
 
 
