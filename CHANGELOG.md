@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.1](https://github.com/Gozala/entail/compare/v3.0.0...v3.0.1) (2025-04-21)
+
+
+### Bug Fixes
+
+* release job ([df698b1](https://github.com/Gozala/entail/commit/df698b1e3ce9e0d334c71bc36e5b08e83b8ba9f4))
+* release job ([#29](https://github.com/Gozala/entail/issues/29)) ([e8268e8](https://github.com/Gozala/entail/commit/e8268e85a13b4a3fa352adeeb225975a7d0cc5f9))
+
 ## [3.0.0](https://github.com/Gozala/entail/compare/v2.2.1...v3.0.0) (2025-04-21)
 
 
