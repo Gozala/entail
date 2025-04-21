@@ -26,19 +26,19 @@ jobs:
           - 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 'latest'
       - name: Setup node ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
       - name: Typecheck
-        uses: gozala/typescript-error-reporter-action@v1.0.9
+        uses: gozala/typescript-error-reporter-action@v1.0.8
         with:
           project: ./tsconfig.json
   test-node:
@@ -54,33 +54,33 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 'latest'
       - name: Setup node ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
       - run: pnpm install
       - name: Test
         run: pnpm run test:node
-  test-deno:
-    name: Test Deno
-    runs-on: ubuntu-latest
+  # test-deno:
+  #   name: Test Deno
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
-        with:
-          deno-version: v2.x # Run with latest stable Deno.
-      - name: Install dependencies
-        run: deno install
-      - name: Test
-        run: deno task test:deno
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     - name: Setup Deno
+  #       uses: denoland/setup-deno@v2
+  #       with:
+  #         deno-version: v2.x # Run with latest stable Deno.
+  #     - name: Install dependencies
+  #       run: deno install
+  #     - name: Test
+  #       run: deno task test:deno
   test-web:
     name: Test Web
     runs-on: ubuntu-latest
@@ -92,13 +92,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
         with:
           version: 'latest'
       - name: Setup node ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'

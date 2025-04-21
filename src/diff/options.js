@@ -1,5 +1,3 @@
-import { inspect } from 'node:util'
-
 import ansiStyles from 'ansi-styles'
 import { Chalk } from 'chalk' // eslint-disable-line unicorn/import-style
 import stripAnsi from 'strip-ansi'

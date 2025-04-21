@@ -1,5 +1,4 @@
-// @ts-expect-error
-import concordance from 'concordance'
+import * as concordance from './concordance.js'
 import concordanceOptions from './options.js'
 
 /**

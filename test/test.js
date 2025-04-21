@@ -1,4 +1,4 @@
-import entail from '../src/lib.js'
+import entail from 'entail'
 
 /**
  * @type {import('entail').Suite}
@@ -143,17 +143,13 @@ export const test = {
   },
 
   'assert missmatched map': async (assert) => {
-    // try {
-    // assert.deepEqual(new Map([['x', 1]]), new Map([['x', 2]]))
-    assert.deepEqual(new Map([['x', 1]]), new Map([['x', 2]]))
-    // } catch (error) {
-    //   // console.log(error)
-    //   // assert.match(/** @type {{details: string}} */ (error).details, '//')
-    //   // assert.match(
-    //   //   /** @type {{details: string}} */ (error).details,
-    //   //   /Actual:\s+"x"\S+1/
-    //   // )
-    //   // stdout.write(error.details)
-    // }
+    try {
+      assert.deepEqual(new Map([['x', 1]]), new Map([['x', 2]]))
+    } catch (error) {
+      assert.match(
+        /** @type {{details: string}} */ (error).details,
+        /Map.*\s*.*\-.*x.*1.*\s*.*\+.*2/m
+      )
+    }
   },
 }
