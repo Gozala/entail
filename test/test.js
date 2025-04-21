@@ -1,5 +1,3 @@
-import { stdout } from 'process'
-import * as assert from '../src/assert.js'
 import entail from '../src/lib.js'
 
 /**
