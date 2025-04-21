@@ -1,6 +1,6 @@
 import * as API from './api.js'
 import { dequal as isDeepEqual } from 'dequal'
-import { compare } from 'uvu/diff'
+import { compare } from './diff.js'
 import kleur from 'kleur'
 
 const FAILURE = kleur.bold().bgRed(' FAIL ')
