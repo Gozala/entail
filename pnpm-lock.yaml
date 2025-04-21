@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@types/diff':
+        specifier: 7.0.2
+        version: 7.0.2
       dequal:
         specifier: ^2.0.3
         version: 2.0.3
@@ -246,6 +249,9 @@ packages:
 
   '@types/deno@2.0.0':
     resolution: {integrity: sha512-O9/jRVlq93kqfkl4sYR5N7+Pz4ukzXVIbMnE/VgvpauNHsvjQ9iBVnJ3X0gAvMa2khcoFD8DSO7mQVCuiuDMPg==}
+
+  '@types/diff@7.0.2':
+    resolution: {integrity: sha512-JSWRMozjFKsGlEjiiKajUjIJVKuKdE3oVy2DNtK+fUo8q82nhFZ2CPQwicAIkXrofahDXrWJ7mjelvZphMS98Q==}
 
   '@types/istanbul-lib-coverage@2.0.4':
     resolution: {integrity: sha512-z/QT1XN4K4KYuslS23k62yDIDLwLFkzxOuMplDtObz0+y7VqJCaO2o+SPwHCvLFZh7xazvvoor2tA/hPz9ee7g==}
@@ -1198,6 +1204,8 @@ snapshots:
   '@sindresorhus/merge-streams@4.0.0': {}
 
   '@types/deno@2.0.0': {}
+
+  '@types/diff@7.0.2': {}
 
   '@types/istanbul-lib-coverage@2.0.4': {}
 
