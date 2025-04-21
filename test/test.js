@@ -1,3 +1,4 @@
+import { stdout } from 'process'
 import * as assert from '../src/assert.js'
 import entail from '../src/lib.js'
 
@@ -141,5 +142,20 @@ export const test = {
 
     assert.equal(result.failed.length, 1)
     assert.match(output, /at boom/g)
+  },
+
+  'assert missmatched map': async (assert) => {
+    // try {
+    // assert.deepEqual(new Map([['x', 1]]), new Map([['x', 2]]))
+    assert.deepEqual(new Map([['x', 1]]), new Map([['x', 2]]))
+    // } catch (error) {
+    //   // console.log(error)
+    //   // assert.match(/** @type {{details: string}} */ (error).details, '//')
+    //   // assert.match(
+    //   //   /** @type {{details: string}} */ (error).details,
+    //   //   /Actual:\s+"x"\S+1/
+    //   // )
+    //   // stdout.write(error.details)
+    // }
   },
 }

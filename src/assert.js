@@ -1,7 +1,8 @@
 import * as API from './api.js'
 import { dequal as isDeepEqual } from 'dequal'
-import { compare } from './diff.js'
+// import { compare } from './diff.js'
 import kleur from 'kleur'
+import { compare } from './diff/diff.js'
 
 const FAILURE = kleur.bold().bgRed(' FAIL ')
 const SUITE = kleur.bold
