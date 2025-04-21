@@ -1,5 +1,25 @@
 # Changelog
 
+## [3.0.0](https://github.com/Gozala/entail/compare/v2.2.1...v3.0.0) (2025-04-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* better diffs in assertion errors ([#27](https://github.com/Gozala/entail/issues/27))
+* better error diffs
+
+### Features
+
+* better diffs in assertion errors ([#27](https://github.com/Gozala/entail/issues/27)) ([4c87a78](https://github.com/Gozala/entail/commit/4c87a78a73274f743dbe9b38f0dad1069d251359))
+* better error diffs ([f2f205e](https://github.com/Gozala/entail/commit/f2f205e28bb66fe0d9dac308e9863d67f7e73fc4))
+
+
+### Bug Fixes
+
+* ci and tests ([53df574](https://github.com/Gozala/entail/commit/53df574a56299ed8eed6d97c96647a65391900cd))
+* remove obsolete imports ([650c631](https://github.com/Gozala/entail/commit/650c631f6d33bdd1401e5ee37eab6dc8e86fdd0a))
+* type errors ([1941204](https://github.com/Gozala/entail/commit/19412041510b0cb475a9d99b9520e2501cceb810))
+
 ## [2.2.1](https://github.com/Gozala/entail/compare/v2.2.0...v2.2.1) (2024-11-30)
 
 
